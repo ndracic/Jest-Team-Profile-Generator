@@ -1,15 +1,14 @@
 const inquirer = require('inquirer');
-const fs = require('fs')
+const fs = require('fs');
 
-const Engineer = require("./lib/engineer")
-const Manager = require("./lib/manager")
-const Intern = require("./lib/employee")
+const Engineer = require("./lib/engineer");
+const Manager = require("./lib/manager");
+const Intern = require("./lib/employee");
 
 const generateHTML = require('./src/generateHTML');
-let answersA = [];
+let answersArr = [];
 
-const manager = () => 
-    inquirer.prompt([
+const manager = [
         {
         type: "input",
         message: "What is the Manager's name?",
@@ -30,22 +29,20 @@ const manager = () =>
         message: "What is their office number?",
         name: "number",
         }
-    ])
+    ];
     
 
-const questions = () =>
-    inquirer.prompt([
+const questions = [
         {
         name: "Role",
         type: "list",
         message: "Please select the position of the new team member",
         choices: ["Engineer", "Intern", "Finished building my team"],
         },
-    ])
+    ];
 
 
-const engineer = () =>
-    inquirer.prompt([
+const engineer = [
         {
         type: "input",
         message: "What is the new Engineer's Name?",
@@ -66,10 +63,9 @@ const engineer = () =>
         message: "What is their GitHub UserName?",
         name: "gh",
         },
-        ])
+        ];
 
-const intern = () => 
-    inquirer.prompt([
+const intern = [
     {
       type: 'input',
       name: 'name',
@@ -90,46 +86,52 @@ const intern = () =>
       name: 'school',
       message: 'What school do they attend?'
     }
-  ]);
+  ];
 
-  function init() {
+  // function to initialize app
+function init() {
     // prompt questions
-    questions().then(answers => {
+    inquirer.prompt(questions).then(answers => {
       // if done adding employees generate team
       if (answers.role === 'Im all done!') {
-        console.log(answersA);
-        makeTeam();
+        console.log(answersArr);
+        generateTeam();
         return;
       }
-
-if (answers.role === 'manager') {
-    inquirer.prompt(manager).then(answers => {
-        const manager = new Manager(answers.name, answers.id, answers.email, answers.number);
-        answersA.push(manager);
-        init();
-      })
-}
-
-if (answers.role === "engineer") {
-    inquirer.prompt(engineer).then(answers => {
-        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.gh);
-        answersA.push(engineer);
-        init();
+      // create manager info
+      if (answers.role === 'Manager') {
+        inquirer.prompt(manager).then(answers => {
+          const manager = new Manager(answers.name, answers.id, answers.email, answers.office);
+          answersArr.push(manager);
+          init();
+        })
+      }
+      // create engineer info
+      if (answers.role === 'Engineer') {
+        inquirer.prompt(engineer).then(answers => {
+          const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+          answersArr.push(engineer);
+          init();
+        })
+      }
+      // create intern info
+      if (answers.role === 'Intern') {
+        inquirer.prompt(intern).then(answers => {
+          const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+          answersArr.push(intern);
+          init();
+        })
+      }
     })
-}
-if (answers.role === "intern") {
-    inquirer.prompt(intern).then(answers => {
-        const intern = new Intern(answers.name, answers.id, answers.email, answers.gh);
-        answersA.push(intern);
-        init();
-    })
-    }}
-    )}
+  };
   
-init();
-
-function makeTeam() {
-    fs.writeFileSync('./dist/generatedTeam.html', generateHTML(answersA), "utf-8");
-    console.log('The companys team has been made.')
+  // Function call to initialize app
+  init();
+  
+  
+  // to write the file of the new team members
+  function generateTeam() {
+    fs.writeFileSync('./dist/generatedTeam.html', generateHTML(answersArr), "utf-8");
+    console.log('Dream Team created!')
   };
   
