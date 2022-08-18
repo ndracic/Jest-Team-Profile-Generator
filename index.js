@@ -116,7 +116,7 @@ function newIntern () {
       type: 'input',
       name: 'school',
       message: 'What school do they attend?'
-    }
+    },
   ]).then(answer => {
     const intern = new Intern(answer.name, answer.id, answer.email, answer.school)
     company.interns.push(intern);
