@@ -2,9 +2,9 @@
 
 generateHTML = company => {
     let newHTML = [];
-    newHTML.push(addManager(company.manager))
-    newHTML.push(company.interns.map(intern=>addIntern(intern)).join(''));
+    newHTML.push(addManager(company.manager));
     newHTML.push(company.engineers.map(engineer=>addEngineer(engineer)).join(''));
+    newHTML.push(company.interns.map(intern=>addIntern(intern)).join(''));
     return newHTML.join('');
 }
 
@@ -49,7 +49,7 @@ return `
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item" id="id">ID: ${intern.getId()}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${intern.getEmail()}">Email: ${intern.getEmail()}</a></li>
+      <li class="list-group-item" id="email"><a href="mailto:${intern.getEmail()}"> Email: ${intern.getEmail()}</a></li>
       <li class="list-group-item" id="school">School: ${intern.getSchool()}</li>
     </ul>
   </div>`;
