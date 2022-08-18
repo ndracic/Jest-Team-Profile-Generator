@@ -1,12 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs')
 
-const engineer = require("./lib/engineer")
+const Engineer = require("./lib/engineer")
 const Manager = require("./lib/manager")
-const intern = require("./lib/employee")
+const Intern = require("./lib/employee")
 
 const generateHTML = require('./src/generateHTML');
-let answersArr = [];
+let answersA = [];
 
 const manager = () => {
     inquirer.prompt([
@@ -18,17 +18,17 @@ const manager = () => {
         {
         type: "input",
         message: "What is their ID?",
-        name: "location",
+        name: "id",
         },
         {
         type: "input",
         message: "What is their email?",
-        name: "location",
+        name: "email",
         },
         {
         type: "input",
         message: "What is their office number?",
-        name: "location",
+        name: "number",
         }
     ])
     }
@@ -92,14 +92,44 @@ inquirer.prompt([
     }
   ]);
 
+  function init() {
+    // prompt questions
+    inquirer.prompt(questions).then(answers => {
+      // if done adding employees generate team
+      if (answers.role === 'Im all done!') {
+        console.log(answersA);
+        makeTeam();
+        return;
+      }
 
+if (answers.role === 'manager') {
+    inquirer.prompt(manager).then(answers => {
+        const manager = new Manager(answers.name, answers.id, answers.email, answers.number);
+        answersA.push(manager);
+        init();
+      })
+}
 
+if (answers.role === "engineer") {
+    inquirer.prompt(engineer).then(answers => {
+        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.gh);
+        answersA.push(engineer);
+        init();
+    })
+}
+if (answers.role === "intern") {
+    inquirer.prompt(intern).then(answers => {
+        const intern = new Intern(answers.name, answers.id, answers.email, answers.gh);
+        answersA.push(intern);
+        init();
+    })
+    }}
+    )}
+  
+init();
 
-// .then((answers) => {
-
-// // const htmlPage = `<html><body><h2>${answers.name}</h2><div>${answers.location}</div></body></html>`
-
-// fs.writeFile('index.html', (htmlPage), (err) => {
-//   err ? console.error(err) : console.log('Success!')
-// })}
-// )
+function makeTeam() {
+    fs.writeFileSync('./dist/generatedTeam.html', generateHTML(answersA), "utf-8");
+    console.log('The companys team has been made.')
+  };
+  
