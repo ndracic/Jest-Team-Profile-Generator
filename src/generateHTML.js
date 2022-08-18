@@ -1,47 +1,61 @@
-const generateHTML = (answersA) => {
-    let newCard = '';
-    let employeeCard = [];
-    for (let i = 1; i < answersA.length; i++) {
-      switch (answersA[i].getRole()) {
-        case 'Engineer':
-          newCard += `
-  <!-- Engineer card -->
+const Engineer = require("../lib/engineer");
+
+generateHTML = company => {
+    let newHTML = [];
+    newHTML.push(addManager(team.manager))
+    newHTML.push(team.interns.map(intern=>addIntern(intern)).join(''));
+    newHTML.push(team.engineers.map(engineer=>addEngineer(engineer)).join(''));
+    return newHTML.join('');
+}
+
+addManager = manager => {
+    return `<!-- Manager card -->
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title text-center" id="name">${manager.getName()}</h3>
+        <h5 id="role" class="text-center"><i class="fas fa-user-ninja"></i> ${manager.getRole()}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" id="id">ID: ${manager.id()}</li>
+        <li class="list-group-item" id="email"><a href="mailto:${manager.email()}">Email: ${manager.email()}</a></li>
+        <li class="list-group-item" id="github"><a href="https://github.com/${manager.gh()}" target="_blank">Github: ${manager.github()}</a></li>
+      </ul>
+    </div>`;
+};
+
+const addEngineer = engineer => {
+    return `
+    <!-- Engineer card -->
   <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <h3 class="card-title text-center" id="name">${answersA[i].name}</h3>
-      <h5 id="role" class="text-center"><i class="fas fa-user-ninja"></i> ${answersA[i].getRole()}</h5>
+      <h3 class="card-title text-center" id="name">${engineer.getName()}</h3>
+      <h5 id="role" class="text-center"><i class="fas fa-user-ninja"></i> ${engineer.getRole()}</h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" id="id">ID: ${answersA[i].id}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${answersA[i].email}">Email: ${answersA[i].email}</a></li>
-      <li class="list-group-item" id="github"><a href="https://github.com/${answersA[i].github}" target="_blank">Github: ${answersA[i].github}</a></li>
+      <li class="list-group-item" id="id">ID: ${engineer.id()}</li>
+      <li class="list-group-item" id="email"><a href="mailto:${engineer.email()}">Email: ${engineer.email()}</a></li>
+      <li class="list-group-item" id="github"><a href="https://github.com/${engineer.github()}" target="_blank">Github: ${engineer.github()}</a></li>
     </ul>
   </div>`;
-  
-          employeeCard.push(newCard)
-          break;
-  
-        case 'Intern':
-          newCard += `   
+}
+
+const addIntern = intern => {
+return ` 
   <!-- Intern card -->
   <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <h3 class="card-title text-center" id="name">${answersA[i].name}</h3>
-      <h5 id="role" class="text-center"><i class="fas fa-user-graduate"></i> ${answersA[i].getRole()}</h5>
+      <h3 class="card-title text-center" id="name">${intern.name()}</h3>
+      <h5 id="role" class="text-center"><i class="fas fa-user-graduate"></i> ${intern.getRole()}</h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" id="id">ID: ${answersA[i].id}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${answersA[i].email}">Email: ${answersA[i].email}</a></li>
-      <li class="list-group-item" id="school">School: ${answersA[i].school}</li>
+      <li class="list-group-item" id="id">ID: ${intern.id()}</li>
+      <li class="list-group-item" id="email"><a href="mailto:${intern.email()}">Email: ${intern.email()}</a></li>
+      <li class="list-group-item" id="school">School: ${intern.school()}</li>
     </ul>
   </div>`;
+};
   
-          employeeCard.push(newCard)
-          break;
-      }
-    };
-  
-  
+module.exports = company => {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -69,25 +83,10 @@ const generateHTML = (answersA) => {
       <div class="container" id="card-container">
         <div class="row">
           <div class="card-area col-12 d-flex justify-content-center mt-5">
-  <!-- Manager card -->
-  <div class="card text" style="width: 18rem;">
-    <div class="card-body">
-      <h3 class="card-title text-center" id="name">${answersA[0].name}</h3>
-      <h5 id="role" class="text-center"><i class="fas fa-user-tie"></i> Manager</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" id="id">ID: ${answersA[0].id}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${answersA[0].email}">Email: ${answersA[0].email}</a></li>
-      <li class="list-group-item" id="officeNum">Office number: ${answersA[0].officeNum}</li>
-    </ul>
-  </div>
-  ${newCard}
+  ${newHTML}
           </div>
         </div>
       </div>
     </body>
     </html>`;
   }
-  
-  
-  module.exports = generateHTML;
