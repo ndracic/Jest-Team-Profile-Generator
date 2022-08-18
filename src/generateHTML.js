@@ -16,9 +16,9 @@ addManager = manager => {
         <h5 id="role" class="text-center"><i class="fas fa-user-ninja"></i> ${manager.getRole()}</h5>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item" id="id">ID: ${manager.id()}</li>
-        <li class="list-group-item" id="email"><a href="mailto:${manager.email()}">Email: ${manager.email()}</a></li>
-        <li class="list-group-item" id="github"><a href="https://github.com/${manager.gh()}" target="_blank">Github: ${manager.github()}</a></li>
+        <li class="list-group-item" id="id">ID: ${manager.getId()}</li>
+        <li class="list-group-item" id="email"><a href="mailto:${manager.getEmail()}">Email: ${manager.getEmail()}</a></li>
+        <li class="list-group-item" id="number">Office Number: ${manager.getOfficeNum()}</li>
       </ul>
     </div>`;
 };
@@ -32,9 +32,9 @@ const addEngineer = engineer => {
       <h5 id="role" class="text-center"><i class="fas fa-user-ninja"></i> ${engineer.getRole()}</h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" id="id">ID: ${engineer.id()}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${engineer.email()}">Email: ${engineer.email()}</a></li>
-      <li class="list-group-item" id="github"><a href="https://github.com/${engineer.github()}" target="_blank">Github: ${engineer.github()}</a></li>
+      <li class="list-group-item" id="id">ID: ${engineer.getId()}</li>
+      <li class="list-group-item" id="email"><a href="mailto:${engineer.getEmail()}">Email: ${engineer.getEmail()}</a></li>
+      <li class="list-group-item" id="github"><a href="https://github.com/${engineer.getGithub()}" target="_blank">Github: ${engineer.getGithub()}</a></li>
     </ul>
   </div>`;
 }
@@ -44,13 +44,13 @@ return `
   <!-- Intern card -->
   <div class="card" style="width: 18rem;">
     <div class="card-body">
-      <h3 class="card-title text-center" id="name">${intern.name()}</h3>
+      <h3 class="card-title text-center" id="name">${intern.getName()}</h3>
       <h5 id="role" class="text-center"><i class="fas fa-user-graduate"></i> ${intern.getRole()}</h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" id="id">ID: ${intern.id()}</li>
-      <li class="list-group-item" id="email"><a href="mailto:${intern.email()}">Email: ${intern.email()}</a></li>
-      <li class="list-group-item" id="school">School: ${intern.school()}</li>
+      <li class="list-group-item" id="id">ID: ${intern.getId()}</li>
+      <li class="list-group-item" id="email"><a href="mailto:${intern.getEmail()}">Email: ${intern.getEmail()}</a></li>
+      <li class="list-group-item" id="school">School: ${intern.getSchool()}</li>
     </ul>
   </div>`;
 };
@@ -83,7 +83,7 @@ module.exports = company => {
       <div class="container" id="card-container">
         <div class="row">
           <div class="card-area col-12 d-flex justify-content-center mt-5">
-  ${generateHTML}
+  ${generateHTML(company)}
           </div>
         </div>
       </div>
