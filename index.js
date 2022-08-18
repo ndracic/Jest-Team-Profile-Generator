@@ -8,7 +8,7 @@ const Intern = require("./lib/employee")
 const generateHTML = require('./src/generateHTML');
 let answersA = [];
 
-const manager = () => {
+const manager = () => 
     inquirer.prompt([
         {
         type: "input",
@@ -31,9 +31,9 @@ const manager = () => {
         name: "number",
         }
     ])
-    }
+    
 
-const questions = () => {
+const questions = () =>
     inquirer.prompt([
         {
         name: "Role",
@@ -42,7 +42,7 @@ const questions = () => {
         choices: ["Engineer", "Intern", "Finished building my team"],
         },
     ])
-}
+
 
 const engineer = () =>
     inquirer.prompt([
@@ -69,7 +69,7 @@ const engineer = () =>
         ])
 
 const intern = () => 
-inquirer.prompt([
+    inquirer.prompt([
     {
       type: 'input',
       name: 'name',
@@ -94,7 +94,7 @@ inquirer.prompt([
 
   function init() {
     // prompt questions
-    inquirer.prompt(questions).then(answers => {
+    questions().then(answers => {
       // if done adding employees generate team
       if (answers.role === 'Im all done!') {
         console.log(answersA);
