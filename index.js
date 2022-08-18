@@ -37,7 +37,7 @@ const questions = [
         name: "Role",
         type: "list",
         message: "Please select the position of the new team member",
-        choices: ["Engineer", "Intern", "Finished building my team"],
+        choices: ["Manager", "Engineer", "Intern", "Finished building my team"],
         },
     ];
 
@@ -93,7 +93,7 @@ function init() {
     // prompt questions
     inquirer.prompt(questions).then(answers => {
       // if done adding employees generate team
-      if (answers.role === 'Im all done!') {
+      if (answers.role === 'Finished building my team!') {
         console.log(answersArr);
         generateTeam();
         return;
@@ -101,7 +101,7 @@ function init() {
       // create manager info
       if (answers.role === 'Manager') {
         inquirer.prompt(manager).then(answers => {
-          const manager = new Manager(answers.name, answers.id, answers.email, answers.office);
+          const manager = new Manager(answers.name, answers.id, answers.email, answers.number);
           answersArr.push(manager);
           init();
         })
@@ -109,7 +109,7 @@ function init() {
       // create engineer info
       if (answers.role === 'Engineer') {
         inquirer.prompt(engineer).then(answers => {
-          const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+          const engineer = new Engineer(answers.name, answers.id, answers.email, answers.gh);
           answersArr.push(engineer);
           init();
         })
