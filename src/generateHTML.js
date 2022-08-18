@@ -1,10 +1,10 @@
-const Engineer = require("../lib/engineer");
+// const Engineer = require("../lib/engineer");
 
 generateHTML = company => {
     let newHTML = [];
-    newHTML.push(addManager(team.manager))
-    newHTML.push(team.interns.map(intern=>addIntern(intern)).join(''));
-    newHTML.push(team.engineers.map(engineer=>addEngineer(engineer)).join(''));
+    newHTML.push(addManager(company.manager))
+    newHTML.push(company.interns.map(intern=>addIntern(intern)).join(''));
+    newHTML.push(company.engineers.map(engineer=>addEngineer(engineer)).join(''));
     return newHTML.join('');
 }
 
@@ -83,7 +83,7 @@ module.exports = company => {
       <div class="container" id="card-container">
         <div class="row">
           <div class="card-area col-12 d-flex justify-content-center mt-5">
-  ${newHTML}
+  ${generateHTML}
           </div>
         </div>
       </div>
