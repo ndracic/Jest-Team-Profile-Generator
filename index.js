@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
-const Intern = require("./lib/employee");
+const Intern = require("./lib/intern");
 
 const generateHTML = require('./src/generateHTML');
 let company = {
